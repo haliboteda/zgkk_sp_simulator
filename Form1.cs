@@ -38,6 +38,16 @@ namespace zgkk_sp_simulator
 
         private void open_Click(object sender, EventArgs e)
         {
+            if (serialPort != null)
+            {
+                if (serialPort.IsOpen)
+                {
+                    serialPort.DataReceived -= SerialPort_DataReceived;
+
+                    serialPort.Close();
+                }
+                else { serialPort.Open(); Console.WriteLine("串口已打开，等待输入..."); return; }
+            }
             // 设置串口参数
             string portName = portname.Text; // 你可以根据需要更改串口号
             int baudRate = 9600;  // 波特率
