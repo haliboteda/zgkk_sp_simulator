@@ -96,6 +96,16 @@ namespace zgkk_sp_simulator
             this.c5 = new System.Windows.Forms.Button();
             this.c6 = new System.Windows.Forms.Button();
             this.c7 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.r10n8 = new System.Windows.Forms.Button();
+            this.r10p8 = new System.Windows.Forms.Button();
+            this.r100n8 = new System.Windows.Forms.Button();
+            this.r100p8 = new System.Windows.Forms.Button();
+            this.bubbler = new System.Windows.Forms.TextBox();
+            this.bubble = new System.Windows.Forms.TextBox();
+            this.bubblereset = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // writetimeout
@@ -874,12 +884,133 @@ namespace zgkk_sp_simulator
             this.c7.UseVisualStyleBackColor = true;
             this.c7.Click += new System.EventHandler(this.c7_Click);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(760, 425);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(35, 46);
+            this.button1.TabIndex = 122;
+            this.button1.Text = "0";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // r10n8
+            // 
+            this.r10n8.Font = new System.Drawing.Font("宋体", 22F);
+            this.r10n8.Location = new System.Drawing.Point(926, 424);
+            this.r10n8.Name = "r10n8";
+            this.r10n8.Size = new System.Drawing.Size(35, 46);
+            this.r10n8.TabIndex = 121;
+            this.r10n8.Text = "-";
+            this.r10n8.UseVisualStyleBackColor = true;
+            this.r10n8.Click += new System.EventHandler(this.r10n8_Click);
+            // 
+            // r10p8
+            // 
+            this.r10p8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.r10p8.Location = new System.Drawing.Point(885, 424);
+            this.r10p8.Name = "r10p8";
+            this.r10p8.Size = new System.Drawing.Size(35, 46);
+            this.r10p8.TabIndex = 120;
+            this.r10p8.Text = "+";
+            this.r10p8.UseVisualStyleBackColor = true;
+            this.r10p8.Click += new System.EventHandler(this.r10p8_Click);
+            // 
+            // r100n8
+            // 
+            this.r100n8.Font = new System.Drawing.Font("宋体", 22F);
+            this.r100n8.Location = new System.Drawing.Point(840, 425);
+            this.r100n8.Name = "r100n8";
+            this.r100n8.Size = new System.Drawing.Size(35, 46);
+            this.r100n8.TabIndex = 119;
+            this.r100n8.Text = "-";
+            this.r100n8.UseVisualStyleBackColor = true;
+            this.r100n8.Click += new System.EventHandler(this.r100n8_Click);
+            // 
+            // r100p8
+            // 
+            this.r100p8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.r100p8.Location = new System.Drawing.Point(799, 425);
+            this.r100p8.Name = "r100p8";
+            this.r100p8.Size = new System.Drawing.Size(35, 46);
+            this.r100p8.TabIndex = 118;
+            this.r100p8.Text = "+";
+            this.r100p8.UseVisualStyleBackColor = true;
+            this.r100p8.Click += new System.EventHandler(this.r100p8_Click);
+            // 
+            // bubbler
+            // 
+            this.bubbler.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bubbler.Location = new System.Drawing.Point(597, 424);
+            this.bubbler.MaxLength = 10;
+            this.bubbler.Name = "bubbler";
+            this.bubbler.Size = new System.Drawing.Size(157, 46);
+            this.bubbler.TabIndex = 117;
+            this.bubbler.Text = "2";
+            this.bubbler.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // bubble
+            // 
+            this.bubble.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bubble.Location = new System.Drawing.Point(428, 424);
+            this.bubble.MaxLength = 10;
+            this.bubble.Name = "bubble";
+            this.bubble.Size = new System.Drawing.Size(157, 46);
+            this.bubble.TabIndex = 116;
+            this.bubble.Text = "9";
+            this.bubble.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // bubblereset
+            // 
+            this.bubblereset.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bubblereset.Location = new System.Drawing.Point(428, 476);
+            this.bubblereset.MaxLength = 10;
+            this.bubblereset.Name = "bubblereset";
+            this.bubblereset.Size = new System.Drawing.Size(157, 46);
+            this.bubblereset.TabIndex = 123;
+            this.bubblereset.Text = "10";
+            this.bubblereset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Black;
+            this.label8.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(268, 426);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(82, 41);
+            this.label8.TabIndex = 130;
+            this.label8.Text = "气泡";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Black;
+            this.label11.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.ForeColor = System.Drawing.Color.White;
+            this.label11.Location = new System.Drawing.Point(268, 479);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(155, 41);
+            this.label11.TabIndex = 131;
+            this.label11.Text = "气泡 重置";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1050, 473);
+            this.ClientSize = new System.Drawing.Size(1050, 527);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.bubblereset);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.r10n8);
+            this.Controls.Add(this.r10p8);
+            this.Controls.Add(this.r100n8);
+            this.Controls.Add(this.r100p8);
+            this.Controls.Add(this.bubbler);
+            this.Controls.Add(this.bubble);
             this.Controls.Add(this.c7);
             this.Controls.Add(this.c6);
             this.Controls.Add(this.c5);
@@ -1023,6 +1154,16 @@ namespace zgkk_sp_simulator
         private System.Windows.Forms.Button c5;
         private System.Windows.Forms.Button c6;
         private System.Windows.Forms.Button c7;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button r10n8;
+        private System.Windows.Forms.Button r10p8;
+        private System.Windows.Forms.Button r100n8;
+        private System.Windows.Forms.Button r100p8;
+        private System.Windows.Forms.TextBox bubbler;
+        private System.Windows.Forms.TextBox bubble;
+        private System.Windows.Forms.TextBox bubblereset;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label11;
     }
 }
 

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace zgkk_sp_simulator
 {
@@ -23,8 +19,8 @@ namespace zgkk_sp_simulator
         void LoadData()
         {
             cmdMap.Clear();
-            List<TextBox> inText = new List<TextBox>() { i1, i2, i3,i4,i5,i6,i7 };
-            List<TextBox> rText = new List<TextBox>() { r1, r2, r3,r4,r5,r6,r7 };
+            List<TextBox> inText = new List<TextBox>() { i1, i2, i3, i4, i5, i6, i7, bubble };
+            List<TextBox> rText = new List<TextBox>() { r1, r2, r3, r4, r5, r6, r7, bubbler };
             for (int i = 0; i < inText.Count; i++)
             {
                 if (!string.IsNullOrEmpty(inText.ElementAt(i).Text) &&
@@ -92,7 +88,7 @@ namespace zgkk_sp_simulator
 
             byte[] buff = new byte[2];
             sp.Read(buff, 0, 2);
-            if(BitConverter.IsLittleEndian)
+            if (BitConverter.IsLittleEndian)
                 Array.Reverse(buff);
 
             // 根据输入的不同，返回不同的响应
@@ -109,7 +105,7 @@ namespace zgkk_sp_simulator
         private byte[] HandleInput(string input)
         {
             LoadData();
-            byte[] bytes = new byte[2] { 0, 0};
+            byte[] bytes = new byte[2] { 0, 0 };
             // 根据 inputCommand 查询字典
             if (cmdMap.ContainsKey(input))
             {
@@ -117,6 +113,13 @@ namespace zgkk_sp_simulator
                 bytes[0] = (byte)(response >> 8);
                 bytes[1] = (byte)response;
                 Console.WriteLine("Command found! Response: " + response);
+            }
+            else if (input.Equals("10"))
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    bubbler.Text = "0";
+                }));
             }
             else
             {
@@ -303,6 +306,26 @@ namespace zgkk_sp_simulator
         private void c7_Click(object sender, EventArgs e)
         {
             r7.Text = "0";
+        }
+
+        private void r100p8_Click(object sender, EventArgs e)
+        {
+            changeNum(bubbler, int.Parse(unit_b.Text), true);
+        }
+
+        private void r100n8_Click(object sender, EventArgs e)
+        {
+            changeNum(bubbler, int.Parse(unit_b.Text), false);
+        }
+
+        private void r10p8_Click(object sender, EventArgs e)
+        {
+            changeNum(bubbler, int.Parse(unit_s.Text), true);
+        }
+
+        private void r10n8_Click(object sender, EventArgs e)
+        {
+            changeNum(bubbler, int.Parse(unit_s.Text), false);
         }
     }
 }
