@@ -29,11 +29,14 @@ namespace zgkk_sp_simulator
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.portPoll = new System.Windows.Forms.Timer(this.components);
             this.writetimeout = new System.Windows.Forms.ComboBox();
             this.readtimeout = new System.Windows.Forms.ComboBox();
             this.parity = new System.Windows.Forms.ComboBox();
             this.baudrate = new System.Windows.Forms.ComboBox();
             this.portname = new System.Windows.Forms.ComboBox();
+            this.portState = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -106,6 +109,9 @@ namespace zgkk_sp_simulator
             this.bubblereset = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // writetimeout
@@ -196,6 +202,22 @@ namespace zgkk_sp_simulator
             this.portname.Name = "portname";
             this.portname.Size = new System.Drawing.Size(155, 49);
             this.portname.TabIndex = 54;
+            this.portname.SelectedIndexChanged += new System.EventHandler(this.portname_SelectedIndexChanged);
+            // 
+            // portState
+            // 
+            this.portState.BackColor = System.Drawing.Color.LimeGreen;
+            this.portState.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.portState.Location = new System.Drawing.Point(352, 70);
+            this.portState.Name = "portState";
+            this.portState.Size = new System.Drawing.Size(32, 32);
+            this.portState.TabIndex = 221;
+            // 
+            // portPoll
+            // 
+            this.portPoll.Enabled = true;
+            this.portPoll.Interval = 1000;
+            this.portPoll.Tick += new System.EventHandler(this.portname_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -275,7 +297,7 @@ namespace zgkk_sp_simulator
             this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(465, 9);
+            this.label1.Location = new System.Drawing.Point(468, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 41);
             this.label1.TabIndex = 59;
@@ -287,7 +309,7 @@ namespace zgkk_sp_simulator
             this.label7.BackColor = System.Drawing.Color.Black;
             this.label7.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(638, 9);
+            this.label7.Location = new System.Drawing.Point(641, 9);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(82, 41);
             this.label7.TabIndex = 60;
@@ -296,10 +318,10 @@ namespace zgkk_sp_simulator
             // i1
             // 
             this.i1.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i1.Location = new System.Drawing.Point(428, 53);
+            this.i1.Location = new System.Drawing.Point(475, 53);
             this.i1.MaxLength = 10;
             this.i1.Name = "i1";
-            this.i1.Size = new System.Drawing.Size(157, 46);
+            this.i1.Size = new System.Drawing.Size(113, 46);
             this.i1.TabIndex = 61;
             this.i1.Text = "2";
             this.i1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -307,7 +329,7 @@ namespace zgkk_sp_simulator
             // r1
             // 
             this.r1.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r1.Location = new System.Drawing.Point(597, 53);
+            this.r1.Location = new System.Drawing.Point(600, 53);
             this.r1.MaxLength = 10;
             this.r1.Name = "r1";
             this.r1.Size = new System.Drawing.Size(157, 46);
@@ -318,18 +340,18 @@ namespace zgkk_sp_simulator
             // i2
             // 
             this.i2.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i2.Location = new System.Drawing.Point(428, 106);
+            this.i2.Location = new System.Drawing.Point(475, 106);
             this.i2.MaxLength = 10;
             this.i2.Name = "i2";
-            this.i2.Size = new System.Drawing.Size(157, 46);
+            this.i2.Size = new System.Drawing.Size(113, 46);
             this.i2.TabIndex = 63;
-            this.i2.Text = "4";
+            this.i2.Text = "3";
             this.i2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // r2
             // 
             this.r2.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r2.Location = new System.Drawing.Point(597, 106);
+            this.r2.Location = new System.Drawing.Point(600, 106);
             this.r2.MaxLength = 10;
             this.r2.Name = "r2";
             this.r2.Size = new System.Drawing.Size(157, 46);
@@ -340,18 +362,18 @@ namespace zgkk_sp_simulator
             // i3
             // 
             this.i3.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i3.Location = new System.Drawing.Point(428, 159);
+            this.i3.Location = new System.Drawing.Point(475, 159);
             this.i3.MaxLength = 10;
             this.i3.Name = "i3";
-            this.i3.Size = new System.Drawing.Size(157, 46);
+            this.i3.Size = new System.Drawing.Size(113, 46);
             this.i3.TabIndex = 65;
-            this.i3.Text = "5";
+            this.i3.Text = "4";
             this.i3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // r3
             // 
             this.r3.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r3.Location = new System.Drawing.Point(597, 159);
+            this.r3.Location = new System.Drawing.Point(600, 159);
             this.r3.MaxLength = 10;
             this.r3.Name = "r3";
             this.r3.Size = new System.Drawing.Size(157, 46);
@@ -382,40 +404,40 @@ namespace zgkk_sp_simulator
             // i6
             // 
             this.i6.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i6.Location = new System.Drawing.Point(428, 318);
+            this.i6.Location = new System.Drawing.Point(475, 318);
             this.i6.MaxLength = 10;
             this.i6.Name = "i6";
-            this.i6.Size = new System.Drawing.Size(157, 46);
+            this.i6.Size = new System.Drawing.Size(113, 46);
             this.i6.TabIndex = 71;
-            this.i6.Text = "8";
+            this.i6.Text = "7";
             this.i6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // i5
             // 
             this.i5.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i5.Location = new System.Drawing.Point(428, 265);
+            this.i5.Location = new System.Drawing.Point(475, 265);
             this.i5.MaxLength = 10;
             this.i5.Name = "i5";
-            this.i5.Size = new System.Drawing.Size(157, 46);
+            this.i5.Size = new System.Drawing.Size(113, 46);
             this.i5.TabIndex = 70;
-            this.i5.Text = "7";
+            this.i5.Text = "6";
             this.i5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // i4
             // 
             this.i4.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i4.Location = new System.Drawing.Point(428, 212);
+            this.i4.Location = new System.Drawing.Point(475, 212);
             this.i4.MaxLength = 10;
             this.i4.Name = "i4";
-            this.i4.Size = new System.Drawing.Size(157, 46);
+            this.i4.Size = new System.Drawing.Size(113, 46);
             this.i4.TabIndex = 69;
-            this.i4.Text = "6";
+            this.i4.Text = "5";
             this.i4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // r6
             // 
             this.r6.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r6.Location = new System.Drawing.Point(597, 318);
+            this.r6.Location = new System.Drawing.Point(600, 318);
             this.r6.MaxLength = 10;
             this.r6.Name = "r6";
             this.r6.Size = new System.Drawing.Size(157, 46);
@@ -426,7 +448,7 @@ namespace zgkk_sp_simulator
             // r5
             // 
             this.r5.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r5.Location = new System.Drawing.Point(597, 265);
+            this.r5.Location = new System.Drawing.Point(600, 265);
             this.r5.MaxLength = 10;
             this.r5.Name = "r5";
             this.r5.Size = new System.Drawing.Size(157, 46);
@@ -437,7 +459,7 @@ namespace zgkk_sp_simulator
             // r4
             // 
             this.r4.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r4.Location = new System.Drawing.Point(597, 212);
+            this.r4.Location = new System.Drawing.Point(600, 212);
             this.r4.MaxLength = 10;
             this.r4.Name = "r4";
             this.r4.Size = new System.Drawing.Size(157, 46);
@@ -448,17 +470,18 @@ namespace zgkk_sp_simulator
             // i7
             // 
             this.i7.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.i7.Location = new System.Drawing.Point(428, 372);
+            this.i7.Location = new System.Drawing.Point(475, 372);
             this.i7.MaxLength = 10;
             this.i7.Name = "i7";
-            this.i7.Size = new System.Drawing.Size(157, 46);
+            this.i7.Size = new System.Drawing.Size(113, 46);
             this.i7.TabIndex = 75;
+            this.i7.Text = "8";
             this.i7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // r7
             // 
             this.r7.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r7.Location = new System.Drawing.Point(597, 372);
+            this.r7.Location = new System.Drawing.Point(600, 372);
             this.r7.MaxLength = 10;
             this.r7.Name = "r7";
             this.r7.Size = new System.Drawing.Size(157, 46);
@@ -472,7 +495,7 @@ namespace zgkk_sp_simulator
             this.label9.BackColor = System.Drawing.Color.Black;
             this.label9.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(894, 9);
+            this.label9.Location = new System.Drawing.Point(897, 9);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(0, 41);
             this.label9.TabIndex = 78;
@@ -480,7 +503,7 @@ namespace zgkk_sp_simulator
             // r100p1
             // 
             this.r100p1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p1.Location = new System.Drawing.Point(799, 53);
+            this.r100p1.Location = new System.Drawing.Point(802, 53);
             this.r100p1.Name = "r100p1";
             this.r100p1.Size = new System.Drawing.Size(35, 46);
             this.r100p1.TabIndex = 79;
@@ -491,7 +514,7 @@ namespace zgkk_sp_simulator
             // r100n1
             // 
             this.r100n1.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n1.Location = new System.Drawing.Point(840, 53);
+            this.r100n1.Location = new System.Drawing.Point(843, 53);
             this.r100n1.Name = "r100n1";
             this.r100n1.Size = new System.Drawing.Size(35, 46);
             this.r100n1.TabIndex = 80;
@@ -502,7 +525,7 @@ namespace zgkk_sp_simulator
             // r10n1
             // 
             this.r10n1.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n1.Location = new System.Drawing.Point(926, 52);
+            this.r10n1.Location = new System.Drawing.Point(929, 52);
             this.r10n1.Name = "r10n1";
             this.r10n1.Size = new System.Drawing.Size(35, 46);
             this.r10n1.TabIndex = 82;
@@ -513,7 +536,7 @@ namespace zgkk_sp_simulator
             // r10p1
             // 
             this.r10p1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p1.Location = new System.Drawing.Point(885, 52);
+            this.r10p1.Location = new System.Drawing.Point(888, 52);
             this.r10p1.Name = "r10p1";
             this.r10p1.Size = new System.Drawing.Size(35, 46);
             this.r10p1.TabIndex = 81;
@@ -524,7 +547,7 @@ namespace zgkk_sp_simulator
             // r10n2
             // 
             this.r10n2.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n2.Location = new System.Drawing.Point(926, 106);
+            this.r10n2.Location = new System.Drawing.Point(929, 106);
             this.r10n2.Name = "r10n2";
             this.r10n2.Size = new System.Drawing.Size(35, 46);
             this.r10n2.TabIndex = 86;
@@ -535,7 +558,7 @@ namespace zgkk_sp_simulator
             // r10p2
             // 
             this.r10p2.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p2.Location = new System.Drawing.Point(885, 106);
+            this.r10p2.Location = new System.Drawing.Point(888, 106);
             this.r10p2.Name = "r10p2";
             this.r10p2.Size = new System.Drawing.Size(35, 46);
             this.r10p2.TabIndex = 85;
@@ -546,7 +569,7 @@ namespace zgkk_sp_simulator
             // r100n2
             // 
             this.r100n2.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n2.Location = new System.Drawing.Point(840, 107);
+            this.r100n2.Location = new System.Drawing.Point(843, 107);
             this.r100n2.Name = "r100n2";
             this.r100n2.Size = new System.Drawing.Size(35, 46);
             this.r100n2.TabIndex = 84;
@@ -557,7 +580,7 @@ namespace zgkk_sp_simulator
             // r100p2
             // 
             this.r100p2.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p2.Location = new System.Drawing.Point(799, 107);
+            this.r100p2.Location = new System.Drawing.Point(802, 107);
             this.r100p2.Name = "r100p2";
             this.r100p2.Size = new System.Drawing.Size(35, 46);
             this.r100p2.TabIndex = 83;
@@ -568,7 +591,7 @@ namespace zgkk_sp_simulator
             // r10n3
             // 
             this.r10n3.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n3.Location = new System.Drawing.Point(926, 159);
+            this.r10n3.Location = new System.Drawing.Point(929, 159);
             this.r10n3.Name = "r10n3";
             this.r10n3.Size = new System.Drawing.Size(35, 46);
             this.r10n3.TabIndex = 90;
@@ -579,7 +602,7 @@ namespace zgkk_sp_simulator
             // r10p3
             // 
             this.r10p3.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p3.Location = new System.Drawing.Point(885, 159);
+            this.r10p3.Location = new System.Drawing.Point(888, 159);
             this.r10p3.Name = "r10p3";
             this.r10p3.Size = new System.Drawing.Size(35, 46);
             this.r10p3.TabIndex = 89;
@@ -590,7 +613,7 @@ namespace zgkk_sp_simulator
             // r100n3
             // 
             this.r100n3.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n3.Location = new System.Drawing.Point(840, 160);
+            this.r100n3.Location = new System.Drawing.Point(843, 160);
             this.r100n3.Name = "r100n3";
             this.r100n3.Size = new System.Drawing.Size(35, 46);
             this.r100n3.TabIndex = 88;
@@ -601,7 +624,7 @@ namespace zgkk_sp_simulator
             // r100p3
             // 
             this.r100p3.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p3.Location = new System.Drawing.Point(799, 160);
+            this.r100p3.Location = new System.Drawing.Point(802, 160);
             this.r100p3.Name = "r100p3";
             this.r100p3.Size = new System.Drawing.Size(35, 46);
             this.r100p3.TabIndex = 87;
@@ -612,7 +635,7 @@ namespace zgkk_sp_simulator
             // r10n4
             // 
             this.r10n4.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n4.Location = new System.Drawing.Point(926, 212);
+            this.r10n4.Location = new System.Drawing.Point(929, 212);
             this.r10n4.Name = "r10n4";
             this.r10n4.Size = new System.Drawing.Size(35, 46);
             this.r10n4.TabIndex = 94;
@@ -623,7 +646,7 @@ namespace zgkk_sp_simulator
             // r10p4
             // 
             this.r10p4.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p4.Location = new System.Drawing.Point(885, 212);
+            this.r10p4.Location = new System.Drawing.Point(888, 212);
             this.r10p4.Name = "r10p4";
             this.r10p4.Size = new System.Drawing.Size(35, 46);
             this.r10p4.TabIndex = 93;
@@ -634,7 +657,7 @@ namespace zgkk_sp_simulator
             // r100n4
             // 
             this.r100n4.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n4.Location = new System.Drawing.Point(840, 213);
+            this.r100n4.Location = new System.Drawing.Point(843, 213);
             this.r100n4.Name = "r100n4";
             this.r100n4.Size = new System.Drawing.Size(35, 46);
             this.r100n4.TabIndex = 92;
@@ -645,7 +668,7 @@ namespace zgkk_sp_simulator
             // r100p4
             // 
             this.r100p4.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p4.Location = new System.Drawing.Point(799, 213);
+            this.r100p4.Location = new System.Drawing.Point(802, 213);
             this.r100p4.Name = "r100p4";
             this.r100p4.Size = new System.Drawing.Size(35, 46);
             this.r100p4.TabIndex = 91;
@@ -656,7 +679,7 @@ namespace zgkk_sp_simulator
             // r10n5
             // 
             this.r10n5.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n5.Location = new System.Drawing.Point(926, 265);
+            this.r10n5.Location = new System.Drawing.Point(929, 265);
             this.r10n5.Name = "r10n5";
             this.r10n5.Size = new System.Drawing.Size(35, 46);
             this.r10n5.TabIndex = 98;
@@ -667,7 +690,7 @@ namespace zgkk_sp_simulator
             // r10p5
             // 
             this.r10p5.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p5.Location = new System.Drawing.Point(885, 265);
+            this.r10p5.Location = new System.Drawing.Point(888, 265);
             this.r10p5.Name = "r10p5";
             this.r10p5.Size = new System.Drawing.Size(35, 46);
             this.r10p5.TabIndex = 97;
@@ -678,7 +701,7 @@ namespace zgkk_sp_simulator
             // r100n5
             // 
             this.r100n5.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n5.Location = new System.Drawing.Point(840, 266);
+            this.r100n5.Location = new System.Drawing.Point(843, 266);
             this.r100n5.Name = "r100n5";
             this.r100n5.Size = new System.Drawing.Size(35, 46);
             this.r100n5.TabIndex = 96;
@@ -689,7 +712,7 @@ namespace zgkk_sp_simulator
             // r100p5
             // 
             this.r100p5.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p5.Location = new System.Drawing.Point(799, 266);
+            this.r100p5.Location = new System.Drawing.Point(802, 266);
             this.r100p5.Name = "r100p5";
             this.r100p5.Size = new System.Drawing.Size(35, 46);
             this.r100p5.TabIndex = 95;
@@ -700,7 +723,7 @@ namespace zgkk_sp_simulator
             // r10n6
             // 
             this.r10n6.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n6.Location = new System.Drawing.Point(926, 318);
+            this.r10n6.Location = new System.Drawing.Point(929, 318);
             this.r10n6.Name = "r10n6";
             this.r10n6.Size = new System.Drawing.Size(35, 46);
             this.r10n6.TabIndex = 102;
@@ -711,7 +734,7 @@ namespace zgkk_sp_simulator
             // r10p6
             // 
             this.r10p6.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p6.Location = new System.Drawing.Point(885, 318);
+            this.r10p6.Location = new System.Drawing.Point(888, 318);
             this.r10p6.Name = "r10p6";
             this.r10p6.Size = new System.Drawing.Size(35, 46);
             this.r10p6.TabIndex = 101;
@@ -722,7 +745,7 @@ namespace zgkk_sp_simulator
             // r100n6
             // 
             this.r100n6.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n6.Location = new System.Drawing.Point(840, 319);
+            this.r100n6.Location = new System.Drawing.Point(843, 319);
             this.r100n6.Name = "r100n6";
             this.r100n6.Size = new System.Drawing.Size(35, 46);
             this.r100n6.TabIndex = 100;
@@ -733,7 +756,7 @@ namespace zgkk_sp_simulator
             // r100p6
             // 
             this.r100p6.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p6.Location = new System.Drawing.Point(799, 319);
+            this.r100p6.Location = new System.Drawing.Point(802, 319);
             this.r100p6.Name = "r100p6";
             this.r100p6.Size = new System.Drawing.Size(35, 46);
             this.r100p6.TabIndex = 99;
@@ -744,7 +767,7 @@ namespace zgkk_sp_simulator
             // r10n7
             // 
             this.r10n7.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n7.Location = new System.Drawing.Point(926, 372);
+            this.r10n7.Location = new System.Drawing.Point(929, 372);
             this.r10n7.Name = "r10n7";
             this.r10n7.Size = new System.Drawing.Size(35, 46);
             this.r10n7.TabIndex = 106;
@@ -755,7 +778,7 @@ namespace zgkk_sp_simulator
             // r10p7
             // 
             this.r10p7.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p7.Location = new System.Drawing.Point(885, 372);
+            this.r10p7.Location = new System.Drawing.Point(888, 372);
             this.r10p7.Name = "r10p7";
             this.r10p7.Size = new System.Drawing.Size(35, 46);
             this.r10p7.TabIndex = 105;
@@ -766,7 +789,7 @@ namespace zgkk_sp_simulator
             // r100n7
             // 
             this.r100n7.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n7.Location = new System.Drawing.Point(840, 373);
+            this.r100n7.Location = new System.Drawing.Point(843, 373);
             this.r100n7.Name = "r100n7";
             this.r100n7.Size = new System.Drawing.Size(35, 46);
             this.r100n7.TabIndex = 104;
@@ -777,7 +800,7 @@ namespace zgkk_sp_simulator
             // r100p7
             // 
             this.r100p7.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p7.Location = new System.Drawing.Point(799, 373);
+            this.r100p7.Location = new System.Drawing.Point(802, 373);
             this.r100p7.Name = "r100p7";
             this.r100p7.Size = new System.Drawing.Size(35, 46);
             this.r100p7.TabIndex = 103;
@@ -788,7 +811,7 @@ namespace zgkk_sp_simulator
             // unit_b
             // 
             this.unit_b.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.unit_b.Location = new System.Drawing.Point(799, 9);
+            this.unit_b.Location = new System.Drawing.Point(802, 9);
             this.unit_b.MaxLength = 10;
             this.unit_b.Name = "unit_b";
             this.unit_b.Size = new System.Drawing.Size(76, 39);
@@ -799,7 +822,7 @@ namespace zgkk_sp_simulator
             // unit_s
             // 
             this.unit_s.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.unit_s.Location = new System.Drawing.Point(885, 9);
+            this.unit_s.Location = new System.Drawing.Point(888, 9);
             this.unit_s.MaxLength = 10;
             this.unit_s.Name = "unit_s";
             this.unit_s.Size = new System.Drawing.Size(76, 39);
@@ -810,7 +833,7 @@ namespace zgkk_sp_simulator
             // c1
             // 
             this.c1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c1.Location = new System.Drawing.Point(760, 53);
+            this.c1.Location = new System.Drawing.Point(763, 53);
             this.c1.Name = "c1";
             this.c1.Size = new System.Drawing.Size(35, 46);
             this.c1.TabIndex = 109;
@@ -821,7 +844,7 @@ namespace zgkk_sp_simulator
             // c2
             // 
             this.c2.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c2.Location = new System.Drawing.Point(760, 106);
+            this.c2.Location = new System.Drawing.Point(763, 106);
             this.c2.Name = "c2";
             this.c2.Size = new System.Drawing.Size(35, 46);
             this.c2.TabIndex = 110;
@@ -832,7 +855,7 @@ namespace zgkk_sp_simulator
             // c3
             // 
             this.c3.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c3.Location = new System.Drawing.Point(760, 159);
+            this.c3.Location = new System.Drawing.Point(763, 159);
             this.c3.Name = "c3";
             this.c3.Size = new System.Drawing.Size(35, 46);
             this.c3.TabIndex = 111;
@@ -843,7 +866,7 @@ namespace zgkk_sp_simulator
             // c4
             // 
             this.c4.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c4.Location = new System.Drawing.Point(760, 211);
+            this.c4.Location = new System.Drawing.Point(763, 211);
             this.c4.Name = "c4";
             this.c4.Size = new System.Drawing.Size(35, 46);
             this.c4.TabIndex = 112;
@@ -854,7 +877,7 @@ namespace zgkk_sp_simulator
             // c5
             // 
             this.c5.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c5.Location = new System.Drawing.Point(760, 265);
+            this.c5.Location = new System.Drawing.Point(763, 265);
             this.c5.Name = "c5";
             this.c5.Size = new System.Drawing.Size(35, 46);
             this.c5.TabIndex = 113;
@@ -865,7 +888,7 @@ namespace zgkk_sp_simulator
             // c6
             // 
             this.c6.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c6.Location = new System.Drawing.Point(760, 319);
+            this.c6.Location = new System.Drawing.Point(763, 319);
             this.c6.Name = "c6";
             this.c6.Size = new System.Drawing.Size(35, 46);
             this.c6.TabIndex = 114;
@@ -876,7 +899,7 @@ namespace zgkk_sp_simulator
             // c7
             // 
             this.c7.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.c7.Location = new System.Drawing.Point(760, 373);
+            this.c7.Location = new System.Drawing.Point(763, 373);
             this.c7.Name = "c7";
             this.c7.Size = new System.Drawing.Size(35, 46);
             this.c7.TabIndex = 115;
@@ -887,7 +910,7 @@ namespace zgkk_sp_simulator
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(760, 425);
+            this.button1.Location = new System.Drawing.Point(763, 425);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(35, 46);
             this.button1.TabIndex = 122;
@@ -897,7 +920,7 @@ namespace zgkk_sp_simulator
             // r10n8
             // 
             this.r10n8.Font = new System.Drawing.Font("宋体", 22F);
-            this.r10n8.Location = new System.Drawing.Point(926, 424);
+            this.r10n8.Location = new System.Drawing.Point(929, 424);
             this.r10n8.Name = "r10n8";
             this.r10n8.Size = new System.Drawing.Size(35, 46);
             this.r10n8.TabIndex = 121;
@@ -908,7 +931,7 @@ namespace zgkk_sp_simulator
             // r10p8
             // 
             this.r10p8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r10p8.Location = new System.Drawing.Point(885, 424);
+            this.r10p8.Location = new System.Drawing.Point(888, 424);
             this.r10p8.Name = "r10p8";
             this.r10p8.Size = new System.Drawing.Size(35, 46);
             this.r10p8.TabIndex = 120;
@@ -919,7 +942,7 @@ namespace zgkk_sp_simulator
             // r100n8
             // 
             this.r100n8.Font = new System.Drawing.Font("宋体", 22F);
-            this.r100n8.Location = new System.Drawing.Point(840, 425);
+            this.r100n8.Location = new System.Drawing.Point(843, 425);
             this.r100n8.Name = "r100n8";
             this.r100n8.Size = new System.Drawing.Size(35, 46);
             this.r100n8.TabIndex = 119;
@@ -930,7 +953,7 @@ namespace zgkk_sp_simulator
             // r100p8
             // 
             this.r100p8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.r100p8.Location = new System.Drawing.Point(799, 425);
+            this.r100p8.Location = new System.Drawing.Point(802, 425);
             this.r100p8.Name = "r100p8";
             this.r100p8.Size = new System.Drawing.Size(35, 46);
             this.r100p8.TabIndex = 118;
@@ -941,7 +964,7 @@ namespace zgkk_sp_simulator
             // bubbler
             // 
             this.bubbler.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bubbler.Location = new System.Drawing.Point(597, 424);
+            this.bubbler.Location = new System.Drawing.Point(600, 424);
             this.bubbler.MaxLength = 10;
             this.bubbler.Name = "bubbler";
             this.bubbler.Size = new System.Drawing.Size(157, 46);
@@ -952,10 +975,10 @@ namespace zgkk_sp_simulator
             // bubble
             // 
             this.bubble.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bubble.Location = new System.Drawing.Point(428, 424);
+            this.bubble.Location = new System.Drawing.Point(475, 424);
             this.bubble.MaxLength = 10;
             this.bubble.Name = "bubble";
-            this.bubble.Size = new System.Drawing.Size(157, 46);
+            this.bubble.Size = new System.Drawing.Size(113, 46);
             this.bubble.TabIndex = 116;
             this.bubble.Text = "9";
             this.bubble.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -963,10 +986,10 @@ namespace zgkk_sp_simulator
             // bubblereset
             // 
             this.bubblereset.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bubblereset.Location = new System.Drawing.Point(428, 476);
+            this.bubblereset.Location = new System.Drawing.Point(475, 476);
             this.bubblereset.MaxLength = 10;
             this.bubblereset.Name = "bubblereset";
-            this.bubblereset.Size = new System.Drawing.Size(157, 46);
+            this.bubblereset.Size = new System.Drawing.Size(113, 46);
             this.bubblereset.TabIndex = 123;
             this.bubblereset.Text = "10";
             this.bubblereset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -977,7 +1000,7 @@ namespace zgkk_sp_simulator
             this.label8.BackColor = System.Drawing.Color.Black;
             this.label8.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(268, 426);
+            this.label8.Location = new System.Drawing.Point(312, 426);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 41);
             this.label8.TabIndex = 130;
@@ -989,18 +1012,54 @@ namespace zgkk_sp_simulator
             this.label11.BackColor = System.Drawing.Color.Black;
             this.label11.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(268, 479);
+            this.label11.Location = new System.Drawing.Point(312, 479);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(155, 41);
             this.label11.TabIndex = 131;
             this.label11.Text = "气泡 重置";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1.Location = new System.Drawing.Point(475, 528);
+            this.textBox1.MaxLength = 10;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(113, 46);
+            this.textBox1.TabIndex = 218;
+            this.textBox1.Text = "11";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox2.Location = new System.Drawing.Point(475, 580);
+            this.textBox2.MaxLength = 10;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(113, 46);
+            this.textBox2.TabIndex = 220;
+            this.textBox2.Text = "12";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox3.Location = new System.Drawing.Point(600, 528);
+            this.textBox3.MaxLength = 2;
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(70, 46);
+            this.textBox3.TabIndex = 117;
+            this.textBox3.Text = "00";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1050, 527);
+            this.ClientSize = new System.Drawing.Size(996, 651);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.bubblereset);
@@ -1009,6 +1068,7 @@ namespace zgkk_sp_simulator
             this.Controls.Add(this.r10p8);
             this.Controls.Add(this.r100n8);
             this.Controls.Add(this.r100p8);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.bubbler);
             this.Controls.Add(this.bubble);
             this.Controls.Add(this.c7);
@@ -1071,6 +1131,7 @@ namespace zgkk_sp_simulator
             this.Controls.Add(this.readtimeout);
             this.Controls.Add(this.parity);
             this.Controls.Add(this.baudrate);
+            this.Controls.Add(this.portState);
             this.Controls.Add(this.portname);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -1164,6 +1225,11 @@ namespace zgkk_sp_simulator
         private System.Windows.Forms.TextBox bubblereset;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label portState;
+        private System.Windows.Forms.Timer portPoll;
     }
 }
 
