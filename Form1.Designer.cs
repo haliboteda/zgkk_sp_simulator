@@ -99,12 +99,12 @@ namespace zgkk_sp_simulator
             this.c5 = new System.Windows.Forms.Button();
             this.c6 = new System.Windows.Forms.Button();
             this.c7 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.c8 = new System.Windows.Forms.Button();
             this.r10n8 = new System.Windows.Forms.Button();
             this.r10p8 = new System.Windows.Forms.Button();
             this.r100n8 = new System.Windows.Forms.Button();
             this.r100p8 = new System.Windows.Forms.Button();
-            this.bubbler = new System.Windows.Forms.TextBox();
+            this.r8 = new System.Windows.Forms.TextBox();
             this.bubble = new System.Windows.Forms.TextBox();
             this.bubblereset = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -113,6 +113,12 @@ namespace zgkk_sp_simulator
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // portPoll
+            // 
+            this.portPoll.Enabled = true;
+            this.portPoll.Interval = 1000;
+            this.portPoll.Tick += new System.EventHandler(this.portname_SelectedIndexChanged);
             // 
             // writetimeout
             // 
@@ -212,12 +218,6 @@ namespace zgkk_sp_simulator
             this.portState.Name = "portState";
             this.portState.Size = new System.Drawing.Size(32, 32);
             this.portState.TabIndex = 221;
-            // 
-            // portPoll
-            // 
-            this.portPoll.Enabled = true;
-            this.portPoll.Interval = 1000;
-            this.portPoll.Tick += new System.EventHandler(this.portname_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -907,15 +907,16 @@ namespace zgkk_sp_simulator
             this.c7.UseVisualStyleBackColor = true;
             this.c7.Click += new System.EventHandler(this.c7_Click);
             // 
-            // button1
+            // c8
             // 
-            this.button1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(763, 425);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(35, 46);
-            this.button1.TabIndex = 122;
-            this.button1.Text = "0";
-            this.button1.UseVisualStyleBackColor = true;
+            this.c8.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.c8.Location = new System.Drawing.Point(763, 425);
+            this.c8.Name = "c8";
+            this.c8.Size = new System.Drawing.Size(35, 46);
+            this.c8.TabIndex = 122;
+            this.c8.Text = "0";
+            this.c8.UseVisualStyleBackColor = true;
+            this.c8.Click += new System.EventHandler(this.c8_Click);
             // 
             // r10n8
             // 
@@ -961,16 +962,16 @@ namespace zgkk_sp_simulator
             this.r100p8.UseVisualStyleBackColor = true;
             this.r100p8.Click += new System.EventHandler(this.r100p8_Click);
             // 
-            // bubbler
+            // r8
             // 
-            this.bubbler.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bubbler.Location = new System.Drawing.Point(600, 424);
-            this.bubbler.MaxLength = 10;
-            this.bubbler.Name = "bubbler";
-            this.bubbler.Size = new System.Drawing.Size(157, 46);
-            this.bubbler.TabIndex = 117;
-            this.bubbler.Text = "2";
-            this.bubbler.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.r8.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.r8.Location = new System.Drawing.Point(600, 424);
+            this.r8.MaxLength = 10;
+            this.r8.Name = "r8";
+            this.r8.Size = new System.Drawing.Size(157, 46);
+            this.r8.TabIndex = 117;
+            this.r8.Text = "2";
+            this.r8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // bubble
             // 
@@ -1045,8 +1046,8 @@ namespace zgkk_sp_simulator
             this.textBox3.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox3.Location = new System.Drawing.Point(600, 528);
             this.textBox3.MaxLength = 2;
-            this.textBox3.ReadOnly = true;
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(70, 46);
             this.textBox3.TabIndex = 117;
             this.textBox3.Text = "00";
@@ -1063,13 +1064,13 @@ namespace zgkk_sp_simulator
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.bubblereset);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.c8);
             this.Controls.Add(this.r10n8);
             this.Controls.Add(this.r10p8);
             this.Controls.Add(this.r100n8);
             this.Controls.Add(this.r100p8);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.bubbler);
+            this.Controls.Add(this.r8);
             this.Controls.Add(this.bubble);
             this.Controls.Add(this.c7);
             this.Controls.Add(this.c6);
@@ -1215,12 +1216,12 @@ namespace zgkk_sp_simulator
         private System.Windows.Forms.Button c5;
         private System.Windows.Forms.Button c6;
         private System.Windows.Forms.Button c7;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button c8;
         private System.Windows.Forms.Button r10n8;
         private System.Windows.Forms.Button r10p8;
         private System.Windows.Forms.Button r100n8;
         private System.Windows.Forms.Button r100p8;
-        private System.Windows.Forms.TextBox bubbler;
+        private System.Windows.Forms.TextBox r8;
         private System.Windows.Forms.TextBox bubble;
         private System.Windows.Forms.TextBox bubblereset;
         private System.Windows.Forms.Label label8;
