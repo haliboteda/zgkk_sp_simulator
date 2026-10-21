@@ -27,6 +27,8 @@ namespace zgkk_sp_simulator
         // bit n = relay n+1, 1 = on; written only by 0x12 xx, read by 0x11
         volatile int relayBits;
         Label[] relayLamps = new Label[8];
+        // The zgkk host reads relays with "11 00"; a 0x00 right after 0x11 is padding, not a command
+        bool lastWasRelayRead;
 
         public Form1() : this(new string[0]) { }
 
@@ -89,7 +91,7 @@ namespace zgkk_sp_simulator
         {
             cmdMap.Clear();
             List<TextBox> inText = new List<TextBox>() { i1, i2, i3, i4, i5, i6, i7, bubble };
-            List<TextBox> rText = new List<TextBox>() { r1, r2, r3, r4, r5, r6, r7, bubbler };
+            List<TextBox> rText = new List<TextBox>() { r1, r2, r3, r4, r5, r6, r7, r8 };
             for (int i = 0; i < inText.Count; i++)
             {
                 if (!string.IsNullOrEmpty(inText.ElementAt(i).Text) &&
@@ -188,6 +190,9 @@ namespace zgkk_sp_simulator
                 {
                     int b0 = sp.ReadByte();
                     if (b0 < 0) return;
+                    bool pad = lastWasRelayRead && b0 == 0x00;
+                    lastWasRelayRead = b0 == CMD_RELAY_READ;
+                    if (pad) continue;
                     LoadData();
                     bool twoByte = b0 == CMD_RELAY_WRITE;
                     int b1 = 0;
@@ -239,7 +244,7 @@ namespace zgkk_sp_simulator
             {
                 this.BeginInvoke(new Action(() =>
                 {
-                    bubbler.Text = "0";
+                    r8.Text = "0";
                 }));
             }
             else
@@ -433,22 +438,27 @@ namespace zgkk_sp_simulator
 
         private void r100p8_Click(object sender, EventArgs e)
         {
-            changeNum(bubbler, int.Parse(unit_b.Text), true);
+            changeNum(r8, int.Parse(unit_b.Text), true);
         }
 
         private void r100n8_Click(object sender, EventArgs e)
         {
-            changeNum(bubbler, int.Parse(unit_b.Text), false);
+            changeNum(r8, int.Parse(unit_b.Text), false);
         }
 
         private void r10p8_Click(object sender, EventArgs e)
         {
-            changeNum(bubbler, int.Parse(unit_s.Text), true);
+            changeNum(r8, int.Parse(unit_s.Text), true);
         }
 
         private void r10n8_Click(object sender, EventArgs e)
         {
-            changeNum(bubbler, int.Parse(unit_s.Text), false);
+            changeNum(r8, int.Parse(unit_s.Text), false);
+        }
+
+        private void c8_Click(object sender, EventArgs e)
+        {
+            r8.Text = "0";
         }
     }
 }
