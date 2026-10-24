@@ -16,7 +16,7 @@ namespace zgkk_sp_simulator
 
         // 数采板协议见 zgkk/docs/Files/基于STM32和AD7606的高精度实时数采器设计说明V3.1.docx
         // Replies come from the UI table, except relays: their state lives in relayBits.
-        const int CMD_BUBBLE_COUNT = 0x09;    // 光电计数，回 1 字节，表1第9条
+        const int CMD_BUBBLE_COUNT = 0x09;    // 光电计数，回 2 字节（docx 写 1 字节是笔误，见 zgkk docs/数采板通信协议.md）
         const int CMD_BUBBLE_RESET = 0x10;    // 光电计数清零，回 1 字节，表1第10条
         const int CMD_RELAY_READ = 0x11;      // 读继电器，回 0x11 + 状态位，表1第11条、例1
         const int CMD_RELAY_WRITE = 0x12;     // 写继电器 0x12 xx，回 0x12 + 写后状态，表1第12条、例2
@@ -251,8 +251,8 @@ namespace zgkk_sp_simulator
             {
                 Console.WriteLine("Command not found.");
             }
-            // The photo-counter commands answer a single byte
-            if (input == CMD_BUBBLE_COUNT || input == CMD_BUBBLE_RESET) return new byte[] { bytes[1] };
+            // Only the count reset answers a single byte; 0x09 answers 2 (zgkk docs/数采板通信协议.md)
+            if (input == CMD_BUBBLE_RESET) return new byte[] { bytes[1] };
             return bytes;
         }
 
