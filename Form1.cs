@@ -30,6 +30,11 @@ namespace zgkk_sp_simulator
         // The zgkk host reads relays with "11 00"; a 0x00 right after 0x11 is padding, not a command
         bool lastWasRelayRead;
 
+        ScenarioPanel scenario;
+        TextBox[] opBoxes, valBoxes;
+        // Old-table text of rows the model has taken over, restored when it lets go
+        readonly Dictionary<TextBox, string> savedVal = new Dictionary<TextBox, string>();
+
         public Form1() : this(new string[0]) { }
 
         public Form1(string[] args)
@@ -37,6 +42,7 @@ namespace zgkk_sp_simulator
             _cliArgs = args ?? new string[0];
             InitializeComponent();
             CreateRelayLamps();
+            CreateScenario();
             Load += Form1_Load;
         }
 
@@ -58,6 +64,47 @@ namespace zgkk_sp_simulator
                 Controls.Add(lamp);
             }
             ShowRelayBits();
+        }
+
+        // Scenario panel to the right of the old table
+        void CreateScenario()
+        {
+            opBoxes = new[] { i1, i2, i3, i4, i5, i6, i7 };
+            valBoxes = new[] { r1, r2, r3, r4, r5, r6, r7 };
+            int left = ClientSize.Width;
+            scenario = new ScenarioPanel(() => relayBits) { Location = new System.Drawing.Point(left, 0), Size = new System.Drawing.Size(780, 700) };
+            Controls.Add(scenario);
+            ClientSize = new System.Drawing.Size(left + scenario.Width, scenario.Height);
+            scenario.Ticked += ShowModelRows;
+            FormClosing += (s, e) => scenario.Save();
+        }
+
+        // Rows whose opcode a running model channel owns show its reply; +/- then shift that channel
+        void ShowModelRows()
+        {
+            for (int k = 0; k < opBoxes.Length; k++)
+            {
+                TextBox val = valBoxes[k];
+                Channel c = ModelChannelOf(val);
+                if (c != null)
+                {
+                    if (!savedVal.ContainsKey(val)) { savedVal[val] = val.Text; val.ReadOnly = true; }
+                    val.Text = scenario.RawOf(c).ToString();
+                }
+                else if (savedVal.TryGetValue(val, out string old))
+                {
+                    val.Text = old;
+                    val.ReadOnly = false;
+                    savedVal.Remove(val);
+                }
+            }
+        }
+
+        Channel ModelChannelOf(TextBox val)
+        {
+            int k = Array.IndexOf(valBoxes, val);
+            if (k < 0 || !int.TryParse(opBoxes[k].Text, NumberStyles.HexNumber, null, out int op)) return null;
+            return scenario.ChannelFor(op);
         }
 
         void ShowRelayBits()
@@ -227,11 +274,18 @@ namespace zgkk_sp_simulator
             }
             if (input == CMD_RELAY_WRITE)
             {
+                int old = relayBits;
                 relayBits = arg;
-                this.BeginInvoke(new Action(ShowRelayBits));
+                this.BeginInvoke(new Action(() => { ShowRelayBits(); scenario.OnRelayWrite(old, arg); }));
                 return new byte[] { CMD_RELAY_WRITE, (byte)arg };
             }
             byte[] bytes = new byte[2] { 0, 0 };
+            if (scenario.TryReply(input, out int raw))
+            {
+                bytes[0] = (byte)(raw >> 8);
+                bytes[1] = (byte)raw;
+                return bytes;
+            }
             // 根据 inputCommand 查询字典
             if (cmdMap.ContainsKey(input))
             {
@@ -258,6 +312,8 @@ namespace zgkk_sp_simulator
 
         void changeNum(TextBox tb, int offset, bool isAdd)
         {
+            Channel c = ModelChannelOf(tb);
+            if (c != null) { c.Offset += isAdd ? offset : -offset; return; }
             int rr = int.Parse(tb.Text) + (isAdd ? offset : (-offset));
             tb.Text = (rr < 0 ? 0 : rr).ToString();
         }
@@ -403,36 +459,50 @@ namespace zgkk_sp_simulator
 
         private void c1_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r1);
+            if (c != null) { c.Offset = 0; return; }
             r1.Text = "0";
         }
 
         private void c2_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r2);
+            if (c != null) { c.Offset = 0; return; }
             r2.Text = "0";
         }
 
         private void c3_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r3);
+            if (c != null) { c.Offset = 0; return; }
             r3.Text = "0";
         }
 
         private void c4_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r4);
+            if (c != null) { c.Offset = 0; return; }
             r4.Text = "0";
         }
 
         private void c5_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r5);
+            if (c != null) { c.Offset = 0; return; }
             r5.Text = "0";
         }
 
         private void c6_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r6);
+            if (c != null) { c.Offset = 0; return; }
             r6.Text = "0";
         }
 
         private void c7_Click(object sender, EventArgs e)
         {
+            Channel c = ModelChannelOf(r7);
+            if (c != null) { c.Offset = 0; return; }
             r7.Text = "0";
         }
 
