@@ -6,18 +6,15 @@ namespace zgkk_sp_simulator
 {
     public enum Quantity { PressureMPa, PressurePa, Hydraulic, Lift, Sound, Temp }
 
-    // One model channel: which opcode answers it and how the physical value maps to the 2-byte reading
+    // How one model quantity maps to the 2-byte reading; which opcode answers it is the row's 来源 choice
     [DataContract]
     public class Channel
     {
         [DataMember] public Quantity Q;
-        [DataMember] public bool Enabled;
-        [DataMember] public int Opcode;
         [DataMember] public double From, To;          // physical range
         [DataMember] public int RawMin = 0, RawMax = 32767;
         // zgkk reads an inverted sensor as RawMax + RawMin - raw (Detail_Sensor 翻转)
         [DataMember] public bool Invert;
-        public int Offset;                            // raw counts added by the old +/- buttons; not persisted
 
         public string Name
         {
@@ -35,21 +32,7 @@ namespace zgkk_sp_simulator
             }
         }
 
-        // The pressure channel is always on; the hydraulic one exists only on the offline bench
-        public bool Optional => Q == Quantity.Lift || Q == Quantity.Sound || Q == Quantity.Temp;
-
-        public bool ShownOn(Bench b)
-        {
-            switch (Q)
-            {
-                case Quantity.PressureMPa: return b != Bench.Breath;
-                case Quantity.PressurePa: return b == Bench.Breath;
-                case Quantity.Hydraulic: return b == Bench.SafetyOffline;
-                default: return true;
-            }
-        }
-
-        public bool ActiveOn(Bench b) { return ShownOn(b) && (!Optional || Enabled); }
+        public string Format => Q == Quantity.PressureMPa ? "0.000" : Q == Quantity.PressurePa ? "0" : Q == Quantity.Hydraulic ? "0.00" : "0.0";
 
         public double Value(ValveModel m)
         {
@@ -70,21 +53,19 @@ namespace zgkk_sp_simulator
             double f = To == From ? 0 : (v - From) / (To - From);
             f = Math.Max(0, Math.Min(1, f));
             int raw = (int)Math.Round(RawMin + f * (RawMax - RawMin));
-            if (Invert) raw = RawMax + RawMin - raw;
-            return Math.Max(0, Math.Min(0xFFFF, raw + Offset));
+            return Invert ? RawMax + RawMin - raw : raw;
         }
 
-        // Defaults follow zgkk Utilitys.BSend_* where they exist; sound/temp/hydraulic opcodes are set per bench
         public static List<Channel> Defaults()
         {
             return new List<Channel>
             {
-                new Channel { Q = Quantity.PressureMPa, Opcode = 0x02, From = 0, To = 10 },
-                new Channel { Q = Quantity.PressurePa, Opcode = 0x02, From = -10000, To = 10000 },
-                new Channel { Q = Quantity.Hydraulic, Opcode = 0x07, From = 0, To = 40 },
-                new Channel { Q = Quantity.Lift, Enabled = true, Opcode = 0x04, From = 0, To = 10 },
-                new Channel { Q = Quantity.Sound, Opcode = 0x05, From = 30, To = 130 },
-                new Channel { Q = Quantity.Temp, Opcode = 0x06, From = -50, To = 150 },
+                new Channel { Q = Quantity.PressureMPa, From = 0, To = 10 },
+                new Channel { Q = Quantity.PressurePa, From = -10000, To = 10000 },
+                new Channel { Q = Quantity.Hydraulic, From = 0, To = 40 },
+                new Channel { Q = Quantity.Lift, From = 0, To = 10 },
+                new Channel { Q = Quantity.Sound, From = 30, To = 130 },
+                new Channel { Q = Quantity.Temp, From = -50, To = 150 },
             };
         }
     }

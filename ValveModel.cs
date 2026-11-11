@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace zgkk_sp_simulator
@@ -47,6 +48,38 @@ namespace zgkk_sp_simulator
     }
 
     // Virtual valve: one state that every channel reads from, stepped on a timer
+    // Shows only the parameters the selected bench uses
+    public class BenchParamsView : CustomTypeDescriptor
+    {
+        readonly ValveParams p;
+        readonly Bench bench;
+
+        public BenchParamsView(ValveParams p, Bench bench) : base(TypeDescriptor.GetProvider(p).GetTypeDescriptor(p))
+        {
+            this.p = p;
+            this.bench = bench;
+        }
+
+        bool Shown(PropertyDescriptor d)
+        {
+            bool offline = bench == Bench.SafetyOffline;
+            if (d.Category.StartsWith("1")) return bench != Bench.Breath;
+            if (d.Category.StartsWith("2")) return bench == Bench.Breath;
+            if (d.Category.StartsWith("4")) return offline;
+            if (d.Name == nameof(ValveParams.ClampDy) || d.Name == nameof(ValveParams.ReturnDy)) return offline;
+            return true;
+        }
+
+        public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+        {
+            return new PropertyDescriptorCollection(base.GetProperties(attributes).Cast<PropertyDescriptor>().Where(Shown).ToArray());
+        }
+
+        public override PropertyDescriptorCollection GetProperties() { return GetProperties(null); }
+
+        public override object GetPropertyOwner(PropertyDescriptor pd) { return p; }
+    }
+
     public class ValveModel
     {
         public ValveParams P = new ValveParams();

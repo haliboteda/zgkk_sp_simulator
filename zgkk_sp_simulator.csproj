@@ -55,8 +55,21 @@
     </Compile>
     <Compile Include="Channel.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ScenarioPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="ChannelsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChannelsForm.Designer.cs">
+      <DependentUpon>ChannelsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.Scenario.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParamsForm.Designer.cs">
+      <DependentUpon>ParamsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ValveModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
